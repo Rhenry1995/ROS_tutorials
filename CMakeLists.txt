@@ -44,7 +44,7 @@ include_directories(
 
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/ROS_tutorials_node.cpp)
+# add_executable(${PROJECT_NAME}_node src/node.cpp)
 
 add_executable(${PROJECT_NAME}_node src/base_file_structure.cpp)
 

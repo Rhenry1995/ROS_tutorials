@@ -1,0 +1,51 @@
+<!-- Note: This is the commenting structure for ROS launch files -->
+
+<!-- The purpose of the launch file is so the user is able to launch multiple
+nodes at once with set paramters.
+
+This will also run a roscore so it is not nessecary to run one unlike when
+running via rosrun. However, it is sometimes advised just.
+
+To run a launch file use the following command
+`roslaunch package launchfile`
+-->
+
+<launch>
+	<!-- initilise arguments of the ROS file here. These are used for passing
+parameters to the nodes -->
+<arg name="message" default="First message"/>
+<arg name="recursion" default="true"/>
+
+ <!-- Running a node:
+		This is the equivilent of running `rosrun package node`. The structure for
+		running a node is:
+		`<node pkg="package" name="node_exc_name" type="node_exc_name" />`
+	-->
+ <node pkg="ROS_tutorial" name="ROS_tutorial_node" type="ROS_tutorial_node">
+	<!-- Passing a paramter to a node: Structure:
+		`<param name="parameter_name" value="value" />`
+	-->
+		<param name="message" value="$(arg message)" />
+ </node>
+
+	<!--
+		Grouping and conditional launches: Structure.
+		```
+		<group if="arg">
+			run nodes
+		</group>
+	-->
+	<group if="$(arg recursion)">
+		<!-- Running another launch file.
+		 This is the equilivent that of running `roslaunch package launch_file`.
+		 The structure of the line is:
+		 <include file="$(find package_name)/launch/launch_file.launch" />
+		-->
+		<include file="$(file ROS_tutorial)/launch/test.launch">
+			<!-- Passing a argument through to an included launch file is the same
+			as a parameter for a node except that is it `arg` insteach of `param` -->
+			<arg name="message" value="Second Message"/>
+			<arg name="recursion" value="false" />
+		</include>
+	</group>
+</launch>
